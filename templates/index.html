@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Home System</title>
+    <script>
+        function captureImage() {
+            fetch('/capture')
+            .then(response => response.json())
+            .then(data => document.getElementById("camera_output").src = data.image);
+        }
+
+        function sendAudio() {
+            let formData = new FormData();
+            formData.append("audio", document.getElementById("audio_input").files[0]);
+            
+            fetch('/detect_audio', { method: "POST", body: formData })
+            .then(response => response.json())
+            .then(data => alert(data.event));
+        }
+    </script>
+</head>
+<body>
+    <h1>Smart Home Security</h1>
+    <button onclick="captureImage()">Capture Image</button>
+    <img id="camera_output" src="" width="300">
+    <input type="file" id="audio_input">
+    <button onclick="sendAudio()">Send Audio</button>
+</body>
+</html>
