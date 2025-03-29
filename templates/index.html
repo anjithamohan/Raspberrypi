@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Smart Home System</title>
-    <script>
-        function captureImage() {
-            fetch('/capture')
-            .then(response => response.json())
-            .then(data => document.getElementById("camera_output").src = data.image);
-        }
-
-        function sendAudio() {
-            let formData = new FormData();
-            formData.append("audio", document.getElementById("audio_input").files[0]);
-            
-            fetch('/detect_audio', { method: "POST", body: formData })
-            .then(response => response.json())
-            .then(data => alert(data.event));
-        }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream Video</title>
 </head>
 <body>
-    <h1>Smart Home Security</h1>
-    <button onclick="captureImage()">Capture Image</button>
-    <img id="camera_output" src="" width="300">
-    <input type="file" id="audio_input">
-    <button onclick="sendAudio()">Send Audio</button>
+    <h1>Live Camera Feed</h1>
+    
+    <!-- Start and Stop buttons for camera stream -->
+    <button onclick="startStream()">Start Stream</button>
+    <button onclick="stopStream()">Stop Stream</button>
+
+    <h2>Live Video Feed:</h2>
+    <img id="videoStream" src="{{ url_for('video_feed') }}" width="640" height="480" />
+
+    <script>
+        function startStream() {
+            fetch('/start_stream')
+                .then(response => response.text())
+                .then(text => alert(text));
+        }
+
+        function stopStream() {
+            fetch('/stop_stream')
+                .then(response => response.text())
+                .then(text => alert(text));
+        }
+    </script>
 </body>
 </html>

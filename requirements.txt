@@ -1,6 +1,6 @@
 Flask
+torch
+torchvision
 opencv-python
+Pillow
 numpy
-librosa
-scikit-learn
-festival  # For text-to-speech
